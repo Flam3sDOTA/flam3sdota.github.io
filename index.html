@@ -489,10 +489,12 @@
   }
 
   .card-name {
-    font-family: var(--font-display);
-    font-size: 1.35rem;
-    line-height: .95;
-    letter-spacing: .06em;
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -.01em;
+    color: var(--text);
   }
 
   .card-desc {
@@ -528,31 +530,80 @@
   }
 
   .card-link {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: white;
-    padding: 8px 14px;
-    border-radius: 999px;
-    border: 1px solid var(--border-accent);
-    background:
-      linear-gradient(
-        180deg,
-        rgba(255,77,77,0.16),
-        rgba(255,77,77,0.08)
-      );
-    opacity: 0;
-    transform: translateY(8px);
-    transition:
-      transform .25s ease,
-      opacity .25s ease,
-      box-shadow .25s ease;
-  }
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--text);
+  padding: 9px 14px;
 
-  .card-link:hover {
-    box-shadow: 0 0 18px rgba(255,77,77,0.2);
-  }
+  border-radius: 5px;
+
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
+  border: 1px solid rgba(255,255,255,0.08);
+
+  position: relative;
+  overflow: hidden;
+
+  opacity: 0;
+  transform: translateY(8px);
+
+  transition:
+    transform .25s cubic-bezier(.2,.9,.2,1),
+    opacity .25s ease,
+    border-color .25s ease,
+    background .25s ease,
+    color .25s ease;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.card-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255,77,77,0.16), transparent 65%);
+  opacity: 0;
+  transition: opacity .3s ease, transform .3s ease;
+  transform: scale(0.9);
+}
+
+.card-link::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 120%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.14), transparent);
+  transform: skewX(-20deg);
+}
+
+.card-link:hover {
+  transform: translateY(0) scale(1.02);
+  border-color: rgba(255,77,77,0.45);
+  background: rgba(255,77,77,0.06);
+}
+
+.card-link:hover::after {
+  animation: shine 1s ease forwards;
+}
+
+.card-link:hover::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.card:hover .card-link {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes shine {
+  0% { left: -120%; }
+  100% { left: 120%; }
+}
 
   .card:hover .card-link {
     opacity: 1;
@@ -735,7 +786,7 @@
 
       <div class="card">
         <div class="card-img">
-        <img class="card-img" src="images/turbo.jpg">
+        <img class="card-img-variant" src="images/turbo.png">
         </div>
         <div class="card-body">
           <div class="card-name">Turbo vs Regular</div>
@@ -748,7 +799,7 @@
 
       <div class="card">
         <div class="card-img">
-        <img class="card-img" src="images/tutorial.jpg">
+        <img class="card-img-variant" src="images/tutorial.png">
         </div>
         <div class="card-body">
           <div class="card-name">Dota Tutorial</div>
