@@ -103,6 +103,16 @@
     z-index: -1;
   }
 
+  .grain {
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/></svg>");
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 100;
+    mix-blend-mode: overlay;
+  }
+
   a {
     color: inherit;
     text-decoration: none;
@@ -290,17 +300,16 @@
   .contact-icons {
     display: flex;
     justify-content: center;
-    gap: 6px;
-    flex-wrap: wrap;
+    gap: 4px;
   }
 
   .contact-icon {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
+    border-radius: 9px;
     color: var(--text-muted);
     background: rgba(255,255,255,0.02);
     border: 1px solid transparent;
@@ -353,6 +362,52 @@
   .main-title span {
     color: var(--red);
     text-shadow: 0 0 18px rgba(255,77,77,0.35);
+  }
+
+  .main-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sort-label {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .sort-select {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    background-color: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.10);
+    color: var(--text);
+    padding: 7px 28px 7px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%238b847b'><path d='M3.204 5h9.592L8 10.481zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 9px center;
+    background-size: 10px;
+    transition: border-color .2s, background-color .2s, color .2s;
+  }
+
+  .sort-select:hover {
+    border-color: var(--border-accent);
+    background-color: rgba(255,77,77,0.04);
+  }
+
+  .sort-select option {
+    background: #101010;
+    color: var(--text);
   }
 
   .projects-grid {
@@ -540,6 +595,17 @@
     100% { left: 120%; }
   }
 
+  .card { opacity: 0; }
+
+  .card.in {
+    animation: cardIn 0.7s cubic-bezier(.2,.8,.2,1) forwards;
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
   .card {
     perspective: 1400px;
   }
@@ -609,19 +675,21 @@
   }
 
   .stat-label {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.14em;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--text-muted);
   }
 
   .stat-value {
-    font-family: var(--font-mono);
-    font-size: 12px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
     color: var(--text);
     text-align: right;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.01em;
   }
 
   .stat-visitors    .stat-value { color: var(--c-visitors); }
@@ -633,6 +701,53 @@
   .stat-ratio .ratio-pos { color: var(--c-positive); }
   .stat-ratio .ratio-neg { color: var(--c-negative); }
   .stat-ratio .ratio-sep { color: var(--text-muted); opacity: 0.5; margin: 0 3px; }
+
+  .stat-ratings {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 0.65rem 0;
+  }
+
+  .ratings-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .ratings-headline {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--c-positive);
+    letter-spacing: 0.01em;
+  }
+
+  .ratings-bar {
+    position: relative;
+    height: 5px;
+    background: var(--c-negative);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .ratings-bar-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    background: var(--c-positive);
+  }
+
+  .ratings-counts {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  .ratings-counts .ratings-pos { color: var(--c-positive); }
+  .ratings-counts .ratings-neg { color: var(--c-negative); }
 
   .card-ribbon {
     position: absolute;
@@ -728,6 +843,8 @@
 </head>
 <body>
 
+<div class="grain" aria-hidden="true"></div>
+
 <div class="layout">
 
   <aside class="sidebar">
@@ -750,7 +867,7 @@
       </div>
 
       <div class="sidebar-section">
-        <div class="sidebar-label">Contact</div>
+        <div class="sidebar-label">Links</div>
         <div class="contact-icons">
 
           <a href="https://github.com/Flam3sDOTA" target="_blank" rel="noopener noreferrer" class="contact-icon" aria-label="GitHub">
@@ -780,6 +897,13 @@
             </svg>
           </a>
 
+          <a href="https://buymeacoffee.com/flam3s" target="_blank" rel="noopener noreferrer" class="contact-icon" aria-label="Buy me a coffee">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">
+              <path fill-rule="evenodd" d="M.5 6a.5.5 0 0 0-.488.608l1.652 7.434A2.5 2.5 0 0 0 4.104 16h5.792a2.5 2.5 0 0 0 2.44-1.958l.131-.59a3 3 0 0 0 1.3-5.854l.221-.99A.5.5 0 0 0 13.5 6zM13 12.5a2 2 0 0 1-.316-.025l.867-3.898A2.001 2.001 0 0 1 13 12.5"/>
+              <path d="m4.4.8-.003.004-.014.019a4 4 0 0 0-.204.31 2 2 0 0 0-.141.267c-.026.06-.034.092-.037.103v.004a.6.6 0 0 0 .091.248c.075.133.178.272.308.445l.01.012c.118.158.26.347.37.543.112.2.22.455.22.745 0 .188-.065.368-.119.494a3 3 0 0 1-.202.388 6 6 0 0 1-.253.382l-.018.025-.005.008-.002.002A.5.5 0 0 1 3.6 4.2l.003-.004.014-.019a4 4 0 0 0 .204-.31 2 2 0 0 0 .141-.267c.026-.06.034-.092.037-.103a.6.6 0 0 0-.091-.248 4 4 0 0 0-.308-.445l-.01-.012a5 5 0 0 1-.37-.543A1.8 1.8 0 0 1 3 1.5c0-.188.065-.368.119-.494.059-.138.134-.274.202-.388a6 6 0 0 1 .253-.382l.018-.025.005-.008.002-.002A.5.5 0 0 1 4.4.8m3 0-.003.004-.014.019a4 4 0 0 0-.204.31 2 2 0 0 0-.141.267c-.026.06-.034.092-.037.103v.004a.6.6 0 0 0 .091.248c.075.133.178.272.308.445l.01.012c.118.158.26.347.37.543.112.2.22.455.22.745 0 .188-.065.368-.119.494a3 3 0 0 1-.202.388 6 6 0 0 1-.253.382l-.018.025-.005.008-.002.002A.5.5 0 0 1 6.6 4.2l.003-.004.014-.019a4 4 0 0 0 .204-.31 2 2 0 0 0 .141-.267c.026-.06.034-.092.037-.103a.6.6 0 0 0-.091-.248 4 4 0 0 0-.308-.445l-.01-.012a5 5 0 0 1-.37-.543A1.8 1.8 0 0 1 6 1.5c0-.188.065-.368.119-.494.059-.138.134-.274.202-.388a6 6 0 0 1 .253-.382l.018-.025.005-.008.002-.002A.5.5 0 0 1 7.4.8m3 0-.003.004-.014.019a4 4 0 0 0-.204.31 2 2 0 0 0-.141.267c-.026.06-.034.092-.037.103v.004a.6.6 0 0 0 .091.248c.075.133.178.272.308.445l.01.012c.118.158.26.347.37.543.112.2.22.455.22.745 0 .188-.065.368-.119.494a3 3 0 0 1-.202.388 6 6 0 0 1-.253.382l-.018.025-.005.008-.002.002A.5.5 0 0 1 9.6 4.2l.003-.004.014-.019a4 4 0 0 0 .204-.31 2 2 0 0 0 .141-.267c.026-.06.034-.092.037-.103a.6.6 0 0 0-.091-.248 4 4 0 0 0-.308-.445l-.01-.012a5 5 0 0 1-.37-.543A1.8 1.8 0 0 1 9 1.5c0-.188.065-.368.119-.494.059-.138.134-.274.202-.388a6 6 0 0 1 .253-.382l.018-.025.005-.008.002-.002A.5.5 0 0 1 10.4.8"/>
+            </svg>
+          </a>
+
         </div>
       </div>
 
@@ -790,6 +914,14 @@
 
     <div class="main-header">
       <div class="main-title">Projects</div>
+      <div class="main-controls">
+        <label class="sort-label" for="sort">Sort</label>
+        <select id="sort" class="sort-select" aria-label="Sort projects">
+          <option value="default">Default</option>
+          <option value="subs">Subscribers</option>
+          <option value="rating">Rating</option>
+        </select>
+      </div>
     </div>
 
     <div class="projects-grid">
@@ -827,8 +959,17 @@
               <div class="stat stat-visitors"><span class="stat-label">Unique Visitors</span><span class="stat-value">37,000+</span></div>
               <div class="stat stat-subscribers"><span class="stat-label">Current Subscribers</span><span class="stat-value">1,758,000+</span></div>
               <div class="stat stat-favorites"><span class="stat-label">Current Favorites</span><span class="stat-value">5,700+</span></div>
-              <div class="stat stat-positive"><span class="stat-label">Positive Ratings</span><span class="stat-value">16,000+</span></div>
-              <div class="stat stat-negative"><span class="stat-label">Negative Ratings</span><span class="stat-value">5,495</span></div>
+              <div class="stat stat-ratings">
+                <div class="ratings-head">
+                  <span class="stat-label">Ratings</span>
+                  <span class="ratings-headline">74.4%</span>
+                </div>
+                <div class="ratings-bar"><div class="ratings-bar-fill" style="width: 74.4%"></div></div>
+                <div class="ratings-counts">
+                  <span class="ratings-pos">▲ 16,000+</span>
+                  <span class="ratings-neg">▼ 5,495</span>
+                </div>
+              </div>
             </div>
             <div class="card-back-footer">
               <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2411152014" target="_blank" rel="noopener noreferrer" class="card-link" aria-label="Visit Dota Tutorial on Steam Workshop">Visit</a>
@@ -857,8 +998,17 @@
               <div class="stat stat-visitors"><span class="stat-label">Unique Visitors</span><span class="stat-value">63,000+</span></div>
               <div class="stat stat-subscribers"><span class="stat-label">Current Subscribers</span><span class="stat-value">724,000+</span></div>
               <div class="stat stat-favorites"><span class="stat-label">Current Favorites</span><span class="stat-value">35,800+</span></div>
-              <div class="stat stat-positive"><span class="stat-label">Positive Ratings</span><span class="stat-value">182,000+</span></div>
-              <div class="stat stat-negative"><span class="stat-label">Negative Ratings</span><span class="stat-value">48,802</span></div>
+              <div class="stat stat-ratings">
+                <div class="ratings-head">
+                  <span class="stat-label">Ratings</span>
+                  <span class="ratings-headline">78.9%</span>
+                </div>
+                <div class="ratings-bar"><div class="ratings-bar-fill" style="width: 78.9%"></div></div>
+                <div class="ratings-counts">
+                  <span class="ratings-pos">▲ 182,000+</span>
+                  <span class="ratings-neg">▼ 48,802</span>
+                </div>
+              </div>
             </div>
             <div class="card-back-footer">
               <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=468785151" target="_blank" rel="noopener noreferrer" class="card-link" aria-label="Visit Snipers Duel on Steam Workshop">Visit</a>
@@ -887,8 +1037,17 @@
               <div class="stat stat-visitors"><span class="stat-label">Unique Visitors</span><span class="stat-value">152,000+</span></div>
               <div class="stat stat-subscribers"><span class="stat-label">Current Subscribers</span><span class="stat-value">915,000+</span></div>
               <div class="stat stat-favorites"><span class="stat-label">Current Favorites</span><span class="stat-value">17,000+</span></div>
-              <div class="stat stat-positive"><span class="stat-label">Positive Ratings</span><span class="stat-value">152,900+</span></div>
-              <div class="stat stat-negative"><span class="stat-label">Negative Ratings</span><span class="stat-value">72,390</span></div>
+              <div class="stat stat-ratings">
+                <div class="ratings-head">
+                  <span class="stat-label">Ratings</span>
+                  <span class="ratings-headline">67.9%</span>
+                </div>
+                <div class="ratings-bar"><div class="ratings-bar-fill" style="width: 67.9%"></div></div>
+                <div class="ratings-counts">
+                  <span class="ratings-pos">▲ 152,900+</span>
+                  <span class="ratings-neg">▼ 72,390</span>
+                </div>
+              </div>
             </div>
             <div class="card-back-footer">
               <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=297182961" target="_blank" rel="noopener noreferrer" class="card-link" aria-label="Visit Invoker Wars Reborn on Steam Workshop">Visit</a>
@@ -898,6 +1057,7 @@
       </div>
 
       <div class="card">
+        <span class="card-ribbon">NEW</span>
         <div class="card-flip">
           <div class="card-face card-face-front">
             <div class="card-img">
@@ -917,8 +1077,17 @@
               <div class="stat stat-visitors"><span class="stat-label">Unique Visitors</span><span class="stat-value">2,800+</span></div>
               <div class="stat stat-subscribers"><span class="stat-label">Current Subscribers</span><span class="stat-value">500+</span></div>
               <div class="stat stat-favorites"><span class="stat-label">Current Favorites</span><span class="stat-value">40+</span></div>
-              <div class="stat stat-positive"><span class="stat-label">Positive Ratings</span><span class="stat-value">150+</span></div>
-              <div class="stat stat-negative"><span class="stat-label">Negative Ratings</span><span class="stat-value">13</span></div>
+              <div class="stat stat-ratings">
+                <div class="ratings-head">
+                  <span class="stat-label">Ratings</span>
+                  <span class="ratings-headline">92.0%</span>
+                </div>
+                <div class="ratings-bar"><div class="ratings-bar-fill" style="width: 92.0%"></div></div>
+                <div class="ratings-counts">
+                  <span class="ratings-pos">▲ 150+</span>
+                  <span class="ratings-neg">▼ 13</span>
+                </div>
+              </div>
             </div>
             <div class="card-back-footer">
               <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3724979773" target="_blank" rel="noopener noreferrer" class="card-link" aria-label="Visit Techies - 7.29 Patch on Steam Workshop">Visit</a>
@@ -928,6 +1097,7 @@
       </div>
 
       <div class="card">
+        <span class="card-ribbon">NEW</span>
         <div class="card-img">
           <img class="card-img-variant" src="images/turbo.png" alt="Turbo vs Regular" loading="lazy" decoding="async">
         </div>
@@ -944,6 +1114,70 @@
   </main>
 
 </div>
+
+<script>
+  // Stagger fade-in cards as they enter the viewport
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const siblings = Array.from(entry.target.parentNode.children);
+          const idx = siblings.indexOf(entry.target);
+          entry.target.style.animationDelay = (idx * 0.07) + 's';
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('.card').forEach((c) => io.observe(c));
+  } else {
+    document.querySelectorAll('.card').forEach((c) => c.classList.add('in'));
+  }
+
+  // Sort projects grid
+  (function () {
+    const select = document.getElementById('sort');
+    const grid = document.querySelector('.projects-grid');
+    if (!select || !grid) return;
+    const original = Array.from(grid.children);
+
+    const parseNum = (el) => el ? parseFloat(el.textContent.replace(/[^\d.]/g, '')) : null;
+    const getSubs = (card) => parseNum(card.querySelector('.stat-subscribers .stat-value'));
+    const getRating = (card) => parseNum(card.querySelector('.ratings-headline'));
+
+    const sortByDesc = (getter) => (a, b) => {
+      const av = getter(a), bv = getter(b);
+      if (av == null && bv == null) return 0;
+      if (av == null || isNaN(av)) return 1;
+      if (bv == null || isNaN(bv)) return -1;
+      return bv - av;
+    };
+
+    select.addEventListener('change', () => {
+      let next;
+      if (select.value === 'subs') next = [...original].sort(sortByDesc(getSubs));
+      else if (select.value === 'rating') next = [...original].sort(sortByDesc(getRating));
+      else next = original;
+      next.forEach((c) => grid.appendChild(c));
+    });
+  })();
+
+  document.querySelectorAll('.stat-ratings').forEach((block) => {
+    const posEl = block.querySelector('.ratings-pos');
+    const negEl = block.querySelector('.ratings-neg');
+    if (!posEl || !negEl) return;
+    const pos = parseFloat(posEl.textContent.replace(/[^\d.]/g, ''));
+    const neg = parseFloat(negEl.textContent.replace(/[^\d.]/g, ''));
+    const total = pos + neg;
+    if (!total || isNaN(total)) return;
+    const posPct = (pos / total) * 100;
+    const formatted = posPct.toFixed(1) + '%';
+    const headline = block.querySelector('.ratings-headline');
+    const fill = block.querySelector('.ratings-bar-fill');
+    if (headline) headline.textContent = formatted;
+    if (fill) fill.style.width = formatted;
+  });
+</script>
 
 </body>
 </html>
