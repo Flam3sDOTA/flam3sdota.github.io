@@ -606,10 +606,6 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  .card {
-    perspective: 1400px;
-  }
-
   .card-flip {
     display: grid;
     grid-template-areas: "stack";
@@ -617,10 +613,13 @@
     flex: 1;
     transform-style: preserve-3d;
     transition: transform .45s cubic-bezier(.4, .2, .3, 1);
+    /* perspective moved here so Firefox doesn't flatten 3D children
+       (overflow: hidden on a perspective container breaks backface-visibility in Firefox) */
+    transform: perspective(1400px) rotateY(0deg);
   }
 
   .card:hover .card-flip {
-    transform: rotateY(180deg);
+    transform: perspective(1400px) rotateY(180deg);
   }
 
   .card-face {
