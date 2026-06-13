@@ -613,8 +613,6 @@
     flex: 1;
     transform-style: preserve-3d;
     transition: transform .45s cubic-bezier(.4, .2, .3, 1);
-    /* perspective moved here so Firefox doesn't flatten 3D children
-       (overflow: hidden on a perspective container breaks backface-visibility in Firefox) */
     transform: perspective(1400px) rotateY(0deg);
   }
 
@@ -1115,7 +1113,6 @@
 </div>
 
 <script>
-  // Stagger fade-in cards as they enter the viewport
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -1133,7 +1130,6 @@
     document.querySelectorAll('.card').forEach((c) => c.classList.add('in'));
   }
 
-  // Sort projects grid
   (function () {
     const select = document.getElementById('sort');
     const grid = document.querySelector('.projects-grid');
